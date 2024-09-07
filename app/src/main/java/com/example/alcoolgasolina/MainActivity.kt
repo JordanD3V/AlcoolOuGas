@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         inicializarComponentesInterface()
 
         buttonCalcular.setOnClickListener {
-            calcularMelhorPreço()
+            calcularMelhorPreco()
         }
     }
 
@@ -49,14 +49,14 @@ class MainActivity : AppCompatActivity() {
         txtResultado = findViewById(R.id.txt_resultado)
     }
 
-    private fun validarCampos(precoAlcool: String, precoGasolina: String): Boolean {
+    private fun validarCampos(pAlcool: String, pGasolina: String): Boolean {
         textInputAlcool.error = null
         textInputGasolina.error = null
 
-        if (precoAlcool.isEmpty()) {
+        if (pAlcool.isEmpty()) {
             textInputAlcool.error = "Digite o preço do álcool"
             return false
-        } else if (precoGasolina.isEmpty()) {
+        } else if (pGasolina.isEmpty()) {
             textInputGasolina.error = "Digite o preço da gasolina"
             return false
         }
@@ -64,21 +64,29 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    private fun calcularMelhorPreço() {
+    private fun calcularMelhorPreco() {
 
-        val precoAlcool = editInputAlcool.toString()
-        val precoGasolina = editInputGasolina.toString()
+        val precoAlcool = editInputAlcool.text.toString()
+        val precoGasolina = editInputGasolina.text.toString()
+
+        val resultadoValidacao = validarCampos(precoAlcool, precoGasolina)
 
 
-        val precoAlcoolNumber = precoAlcool.toDouble()
-        val precoGasolinaNumber = precoGasolina.toDouble()
-        val resultado = (precoAlcoolNumber / precoGasolinaNumber)
+        if(resultadoValidacao){
 
-        if (resultado >= 0.7) {
-            txtResultado.text = "É melhor abastecer com gasolina"
-        } else {
-            txtResultado.text = "É melhor abastecer com álcool"
+            val precoAlcoolNumber = precoAlcool.toDouble()
+            val precoGasolinaNumber = precoGasolina.toDouble()
+
+            val resultado = (precoAlcoolNumber / precoGasolinaNumber)
+
+            if (resultado >= 0.7) {
+                txtResultado.text = "É melhor abastecer com gasolina"
+            } else {
+                txtResultado.text = "É melhor abastecer com álcool"
+            }
         }
+
+
     }
 
 
